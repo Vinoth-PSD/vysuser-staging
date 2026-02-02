@@ -1,0 +1,156 @@
+import React, { useEffect, useState } from 'react';
+import { IoArrowBackOutline } from "react-icons/io5";
+import { ViewedProfilesCard } from './ViewedProfiles/ViewedProfilesCard';
+import { SuggestedProfiles } from '../LoginHome/SuggestedProfiles';
+import Pagination from '../Pagination';
+//import axios from 'axios';
+// import { IoMdArrowDropdown } from 'react-icons/io';
+import apiClient from '../../API';
+import { Hearts } from 'react-loader-spinner';
+import { useLocation, useNavigate } from 'react-router-dom';
+//import { IoMdArrowDropdown } from 'react-icons/io';
+import { MdToggleOn, MdToggleOff } from "react-icons/md"; // 👈 import toggle icons
+//import { useNavigate } from 'react-router-dom';
+
+interface ViewedProfilesProps {
+    dashBoardAgain: () => void;
+}
+
+export const ViewedProfiles: React.FC<ViewedProfilesProps> = () => {
+    const loginuser_profileId = localStorage.getItem("loginuser_profile_id");
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [totalRecords, setTotalRecords] = useState<number>(0);
+    const dataPerPage = 10
+    const toptalPages = totalRecords > 0 && dataPerPage > 0 ? Math.ceil(totalRecords / dataPerPage) : 1;
+    //const [sortBy, setSortBy] = useState<string>("datetime"); // default sort
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Get page number from URL query parameter or default to 1
+    const getInitialPageNumber = () => {
+        const searchParams = new URLSearchParams(location.search);
+        const pageFromUrl = searchParams.get('page');
+        return pageFromUrl ? parseInt(pageFromUrl) : 1;
+    };
+    const getInitialSortBy = () => {
+        const searchParams = new URLSearchParams(location.search);
+        const sortFromUrl = searchParams.get('sortBy');
+        return sortFromUrl || 'datetime';
+    }
+
+    const [pageNumber, setPageNumber] = useState<number>(getInitialPageNumber());
+    const [sortBy, setSortBy] = useState<string>(getInitialSortBy());
+
+    const handleBackToDashboard = () => {
+        navigate('/Dashboard');
+    };
+    // const [totalPages,setTotalPages]=useState<number>(0)
+
+    //console.log(totalRecords, "totalRecords", dataPerPage, "dataPerPage", toptalPages, "toptalPages", totalRecords, "totalRecords");
+    const toggleSort = () => {
+        setSortBy((prev) =>
+            prev === "profile_id" ? "datetime" : "profile_id"
+        );
+        setPageNumber(1); // 👈 reset to first page on sort change
+    };
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const response = await apiClient.post(
+                "/auth/My_viewed_profiles/",
+                {
+                    profile_id: loginuser_profileId,
+                }
+            );
+            setTotalRecords(response.data.viewed_profile_count);
+
+        } catch (err) {
+            setError("Failed to load viewed profiles");
+            console.error("Failed to load viewed profiles", err);
+
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, [pageNumber, sortBy]);
+
+    useEffect(() => {
+        // Update URL when page changes
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.set('page', pageNumber.toString());
+        searchParams.set('sortBy', sortBy);
+        // Replace current URL without causing navigation
+        navigate(`?${searchParams.toString()}`, { replace: true });
+    }, [pageNumber, sortBy, location.search, navigate]);
+
+    //const navigate = useNavigate();
+
+    return (
+        <div className="bg-grayBg pt-10">
+            <div className="container mx-auto pb-10">
+                <div className="flex justify-between items-center mb-5 max-md:flex-wrap max-md:gap-y-5">
+                    <div className="w-full flex justify-start items-center">
+                        <IoArrowBackOutline
+                            // onClick={() => navigate("/Dashboard")} 
+                            onClick={handleBackToDashboard}
+                            className="text-[24px] mr-2 cursor-pointer" />
+                        <h4 className=" text-[24px] text-vysyamalaBlackSecondary font-bold max-md:text-[18px]"> Viewed Profiles {" "}
+                            <span className="text-sm text-primary">({totalRecords})</span>
+                        </h4>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        {sortBy === "profile_id" ? (
+                            <MdToggleOff
+                                onClick={toggleSort}
+                                className="text-5xl text-gray-400 cursor-pointer hover:text-primary transition"
+                            />
+                        ) : (
+                            <MdToggleOn
+                                onClick={toggleSort}
+                                className="text-5xl text-primary cursor-pointer hover:text-primary-dark transition"
+                            />
+                        )}
+                        <span className="text-lg font-medium text-primary whitespace-nowrap">
+                            {sortBy === "profile_id" ? "Sort by Profile ID" : "Sort by Date"}
+                        </span>
+                    </div>
+                </div>
+
+                {/* viewed profiles Card */}
+                {loading ? (
+                    <div className='flex flex-col items-center justify-center min-h-[300px]'>
+                        <Hearts
+                            height="100"
+                            width="100"
+                            color="#FF6666"
+                            ariaLabel="hearts-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                        />
+                        <p className="text-sm">Please wait...</p>
+                    </div>
+                ) : error ? (
+                    <p className="text-red-500 text-center py-10">{error}</p>
+                ) : (
+                    <div className="bg-white rounded-xl shadow-profileCardShadow px-5 py-5">
+                        <p className="text-ashSecondary font-semibold">Today</p>
+                        <ViewedProfilesCard pageNumber={pageNumber} dataPerPage={dataPerPage} sortBy={sortBy} />
+                        <Pagination
+                            pageNumber={pageNumber}
+                            setPageNumber={setPageNumber}
+                            totalRecords={totalRecords}
+                            dataPerPage={dataPerPage}
+                            toptalPages={toptalPages}
+                        />
+                    </div>
+                )}
+            </div>
+            <SuggestedProfiles />
+        </div>
+    )
+}
