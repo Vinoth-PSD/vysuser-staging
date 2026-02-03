@@ -14,7 +14,7 @@ export const HeroSlider = () => {
     const fetchProfileCount = async () => {
       try {
         const response = await fetch(
-           "https://app.vysyamala.com/auth/Get_profile_intrests_list/",
+           "http://20.84.40.134:8000/auth/Get_profile_intrests_list/",
           //"http://103.214.132.20:8000/auth/Get_profile_intrests_list/",
           {
             method: "POST",

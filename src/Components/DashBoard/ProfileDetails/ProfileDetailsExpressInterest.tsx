@@ -594,7 +594,7 @@ export const ProfileDetailsExpressInterest: React.FC<
   const generatePoruthamPDF = async () => {
     try {
       const response = await axios.get(
-        `https://app.vysyamala.com/auth/generate-porutham-pdf-mobile/${loginuser_profileId}/${idparam}/`,
+        `http://20.84.40.134:8000/auth/generate-porutham-pdf-mobile/${loginuser_profileId}/${idparam}/`,
         // const response = await apiClient.get(
         //   `/auth/generate-porutham-pdf-mobile/${loginuser_profileId}/${idparam}/`,
         {
@@ -732,8 +732,8 @@ export const ProfileDetailsExpressInterest: React.FC<
   const handleDownloadPdf = () => {
     const link = document.createElement("a");
     link.target = '_blank'; // Open in a new tab
-    // link.href = `https://app.vysyamala.com/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
-    link.href = `https://app.vysyamala.com/auth/New_horoscope_black/${idparam}/${loginuser_profileId}/`;
+    // link.href = `http://20.84.40.134:8000/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
+    link.href = `http://20.84.40.134:8000/auth/New_horoscope_black/${idparam}/${loginuser_profileId}/`;
     // link.href = `http://103.214.132.20:8000/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
     link.download = `pdf_${idparam}.pdf`; // Customize the file name
     link.click();
@@ -741,8 +741,8 @@ export const ProfileDetailsExpressInterest: React.FC<
   const handleDownloadColorPdf = () => {
     const link = document.createElement("a");
     link.target = '_blank'; // Open in a new tab
-    // link.href = `https://app.vysyamala.com/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
-    link.href = `https://app.vysyamala.com/auth/New_horoscope_color/${idparam}/${loginuser_profileId}/`;
+    // link.href = `http://20.84.40.134:8000/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
+    link.href = `http://20.84.40.134:8000/auth/New_horoscope_color/${idparam}/${loginuser_profileId}/`;
     // link.href = `http://103.214.132.20:8000/auth/generate-pdf/${loginuser_profileId}/${idparam}`;
     link.download = `pdf_${idparam}.pdf`; // Customize the file name
     link.click();

@@ -218,25 +218,25 @@ const UploadImages: React.FC<UploadImagesProps> = () => {
 
     await uploadImages(
       selectedFiles,
-      "https://app.vysyamala.com/auth/ImageSetUpload/",
+      "http://20.84.40.134:8000/auth/ImageSetUpload/",
       //"http://103.214.132.20:8000/auth/ImageSetUpload/",
       "image_files"
     );
     await uploadImages(
       selectedHoroscopeFiles,
-      "https://app.vysyamala.com/auth/Horoscope_upload/",
+      "http://20.84.40.134:8000/auth/Horoscope_upload/",
       //"http://103.214.132.20:8000/auth/Horoscope_upload/",
       "horoscope_file"
     );
     await uploadImages(
       selectedDivorceProofFiles,
-      "https://app.vysyamala.com/auth/Divorceproof_upload/",
+      "http://20.84.40.134:8000/auth/Divorceproof_upload/",
       //"http://103.214.132.20:8000/auth/Divorceproof_upload/",
       "divorcepf_file"
     );
     await uploadImages(
       selectedIDProofFiles,
-      "https://app.vysyamala.com/auth/Idproof_upload/",
+      "http://20.84.40.134:8000/auth/Idproof_upload/",
       //"http://103.214.132.20:8000/auth/Idproof_upload/",
       "idproof_file"
     );

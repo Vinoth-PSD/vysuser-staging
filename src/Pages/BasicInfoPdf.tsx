@@ -91,7 +91,7 @@ export const BasicInfoPdf = () => {
               <img
                 src={
                  
-                 "https://app.vysyamala.com/media/default_groom.png"
+                 "http://20.84.40.134:8000/media/default_groom.png"
                     //"http://103.214.132.20:8000/media/default_groom.png"
                 }
                 alt={profileDetails?.personal_profile_name || "Name not available"}

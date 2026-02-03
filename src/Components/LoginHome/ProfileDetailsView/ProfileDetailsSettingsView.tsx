@@ -70,13 +70,13 @@ export const ProfileDetailsSettingsView: React.FC<ProfileDetailsSettingsViewProp
             setLoading(true);
             try {
                 const apiEndpoints: Record<string, string> = {
-                    "1": 'https://app.vysyamala.com/auth/Get_mutual_intrests/',
-                    "2": 'https://app.vysyamala.com/auth/Get_profile_wishlist/',
-                    "3": 'https://app.vysyamala.com/auth/My_intrests_list/',
-                    "4": 'https://app.vysyamala.com/auth/My_viewed_profiles/',
-                    "5": 'https://app.vysyamala.com/auth/My_profile_visit/',
-                    "6": 'https://app.vysyamala.com/auth/Get_photo_request_list/',
-                    // "7": 'https://app.vysyamala.com/auth/Get_Gallery_lists/',
+                    "1": 'http://20.84.40.134:8000/auth/Get_mutual_intrests/',
+                    "2": 'http://20.84.40.134:8000/auth/Get_profile_wishlist/',
+                    "3": 'http://20.84.40.134:8000/auth/My_intrests_list/',
+                    "4": 'http://20.84.40.134:8000/auth/My_viewed_profiles/',
+                    "5": 'http://20.84.40.134:8000/auth/My_profile_visit/',
+                    "6": 'http://20.84.40.134:8000/auth/Get_photo_request_list/',
+                    // "7": 'http://20.84.40.134:8000/auth/Get_Gallery_lists/',
                     // "1": 'http://103.214.132.20:8000/auth/Get_mutual_intrests/',
                     // "2": 'http://103.214.132.20:8000/auth/Get_profile_wishlist/',
                     // "3": 'http://103.214.132.20:8000/auth/My_intrests_list/',
@@ -85,7 +85,7 @@ export const ProfileDetailsSettingsView: React.FC<ProfileDetailsSettingsViewProp
                     // "6": 'http://103.214.132.20:8000/auth/Get_photo_request_list/',
                 };
 
-                const apiEndpoint = apiEndpoints[pageid] || 'https://app.vysyamala.com/auth/Get_prof_list_match/';
+                const apiEndpoint = apiEndpoints[pageid] || 'http://20.84.40.134:8000/auth/Get_prof_list_match/';
                 //const apiEndpoint = apiEndpoints[pageid] || 'http://103.214.132.20:8000/auth/Get_prof_list_match/';
 
                 const requestBody: any = {
