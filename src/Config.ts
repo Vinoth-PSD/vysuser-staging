@@ -1,6 +1,6 @@
 // src/config.js
 const config = {
-  apiUrl: 'http://20.84.40.134:5173'   
+  apiUrl: 'https://app.vysyamala.com'   
   };
   
   export default config;
